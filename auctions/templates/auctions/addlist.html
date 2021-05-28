@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1> add to the list </h1>
+    <form action="{% url 'addlist' %}" method="post">
+        {% csrf_token %}
+        <select >
+            {% for category in categories %}
+            <option value="{{category}}">{{category}} </option>
+            {% endfor %}
+        </select>
+        <button type="submit">submit </button>
+    </form>
+{% endblock %}
