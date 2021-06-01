@@ -7,8 +7,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
-    <body>
+    <body style="background-color: #f3f4f6;">
+        <header class=" bg-light">
+        <div class="navbar navbar-expand-lg navbar-light bg-light">
+            <div style="min-width:70%">
         <h1>Auctions</h1>
+            </div>
         <div>
             {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
@@ -21,12 +25,7 @@
                 <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
             </li>
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'addlist' %}"> Add List </a>
-                </li>
+                
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
@@ -37,7 +36,28 @@
             {% endif %}
         </ul>
         <hr>
-        {% block body %}
-        {% endblock %}
+        </div>
+        </div>
+        </header>
+        <section class="d-flex">
+            <aside>
+                <div class"nav-collapse" tabindex="5000" style="overflow:hidden; outline:none">
+                   {% if user.is_authenticated %}
+                   <ul>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'addlist' %}"> Add List </a>
+                </li>
+                   </ul>
+                   {% endif %}
+            </div>
+            </aside>
+            <section class="flex-grow-1" style="background-color:#f3f4f6">
+                {% block body %}
+                {% endblock %}
+            </section>
+        </section>
     </body>
 </html>

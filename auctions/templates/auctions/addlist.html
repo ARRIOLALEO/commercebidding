@@ -1,14 +1,36 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h1> add to the list </h1>
-    <form action="{% url 'addlist' %}" method="post">
+    <h1 class="text-center h1 text-uppercase mb-4"> add to the list </h1>
+    <div class="col-md-10 offset-md-1">
+    <form action="{% url 'addlist' %}" method="post" style="background-color:white; padding:15px;border-radius:5px; overflow:hidden">
+    <div class="form-row">
         {% csrf_token %}
-        <select >
-            {% for category in categories %}
-            <option value="{{category}}">{{category}} </option>
-            {% endfor %}
+        {{form.title}}
+    </div>
+    <div>
+        <div class="form-row">
+            {{form.image}} 
+        </div>
+       <div class="form-row">
+           {{form.description}}
+        <div class="col-mb-4 mb-2">
+            {{form.price}}
+        </div>
+        <div class="col-mb-4 mb-2">
+               {{form.categories}}
         </select>
-        <button type="submit">submit </button>
+        </div>
+        <div class="col-mb-4 mb-2" >
+        <select name="isActive" class="form-control custom-select w-auto">
+            <option value="0">Not</option>
+            <option value="1">Yes</option>
+        </select>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">submit </button>
+    </div>
     </form>
+    </div>
+   
 {% endblock %}
