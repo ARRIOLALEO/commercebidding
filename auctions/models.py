@@ -12,7 +12,7 @@ class Categories(models.Model):
     def __str__(self):
         return f"{self.name_cat}"
     def get_cat(self):
-        return self.name_cat
+        return f"{self.name_cat}"
 
 class Listings(models.Model):
     list_active = [("not","yes"),("not","not")]
