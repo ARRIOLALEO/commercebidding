@@ -3,7 +3,7 @@
 {% block body %}
     <h1 class="text-center h1 text-uppercase mb-4"> add to the list </h1>
     <div class="col-md-10 offset-md-1">
-    <form action="{% url 'addlist' %}" method="post" style="background-color:white; padding:15px;border-radius:5px; overflow:hidden">
+    <form action="{% url 'addlist' %}" enctype='multipart/form-data'   method="post" style="background-color:white; padding:15px;border-radius:5px; overflow:hidden">
     <div class="form-row">
         {% csrf_token %}
     </div>

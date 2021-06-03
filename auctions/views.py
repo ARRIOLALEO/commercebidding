@@ -1,18 +1,13 @@
-from secrets import choice
+from django import forms
 from django.contrib.auth import authenticate, login, logout, models
 from django.db import IntegrityError
 from django.db.transaction import commit
-from django.forms import fields, widgets
-from django.forms.forms import Form
-from  django.forms import ModelForm
+from django.forms import ModelForm, widgets
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User, Categories, Listings
-from django import forms
-from django.forms import NumberInput
-
 active = (('yes','yes'),('not','not'))
 
 def index(request):
@@ -20,9 +15,14 @@ def index(request):
 
 
 class formadd(ModelForm):
+    def __init__(self, *args , **kwargs):
+        super(formadd,self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs ={'class':'form-control','placeholder':'add the title name'}
+        self.fields['description'].widget=forms.Textarea()
+
     class Meta:
         model = Listings
-        fields =['title','description','bit_start','categorie','is_active']
+        fields =['title','description','image','bit_start','categorie','is_active']
 
 def login_view(request):
     if request.method == "POST":
@@ -78,7 +78,8 @@ def register(request):
 @login_required(login_url='/login')
 def addlist(request):
     if request.method =="POST":
-        form = formadd(request.POST)
+        form = formadd(request.POST,request.FILES)
+        print(form)
         if form.is_valid():
             new_article = form.save()
             return HttpResponse("this was ok all")
