@@ -18,7 +18,6 @@ class Listings(models.Model):
     list_active = [("not","yes"),("not","not")]
     title = models.CharField(max_length=160)
     description = models.CharField(max_length=500)
-    image  = models.FileField(upload_to='images/',null=True,verbose_name="")
     bit_start = models.FloatField()
     categorie = models.ManyToManyField(Categories,related_name="categories")
     is_active = models.CharField(max_length=8,choices=list_active)

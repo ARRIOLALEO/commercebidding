@@ -1,0 +1,9 @@
+ title = forms.CharField(max_length=500,widget=forms.TextInput(attrs={'class':'form-control mb-1','placeholder':'Insert the name of the product'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control mb-1','placeholder':'Insert the desption of your product here'}))
+    image = forms.FileField(required=False)
+    bit_start = forms.FloatField(required=False, min_value=0,
+                             widget=NumberInput(attrs={'id': 'form_homework', 'step': '0.5', 'class':'form-control','placeholder':'add the price of the product'}))
+    categorie = forms.ModelChoiceField(queryset=Categories.objects.all(),empty_label="Select the Categorie",widget=forms.Select(attrs={'class':'form-control'}))
+    is_active= forms.ChoiceField(choices=active,widget=forms.Select(attrs={'class':'form-control'}))
+
+
