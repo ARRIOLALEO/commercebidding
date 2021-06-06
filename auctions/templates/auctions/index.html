@@ -3,5 +3,16 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    {% for list in listings %}
+       <h2> {{ list.title }} </h2>
+       <image src="media/{{list.image}}"/>
+       
+       <form method="post" action="/seelist">
+           {% csrf_token %}
+           <input type="hidden" value="{{ list.id }}" name="id">
+           <button type="submit"> see full information </button>
+       </form>
+       <hr/>
+    {% endfor %}
+
 {% endblock %}

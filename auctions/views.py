@@ -11,7 +11,9 @@ from .models import User, Categories, Listings
 active = (('yes','yes'),('not','not'))
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html",{
+        'listings':Listings.objects.all()
+    })
 
 
 class formadd(ModelForm):
@@ -79,16 +81,21 @@ def register(request):
 def addlist(request):
     if request.method =="POST":
         form = formadd(request.POST,request.FILES)
-        print(form)
         if form.is_valid():
             new_article = form.save()
+            new_article.user = User.objects.get(id=request.user.id)
+            new_article.save()
             return HttpResponse("this was ok all")
         return HttpResponse("it was save")
     else:
         return render(request,"auctions/addlist.html",{'form':formadd})
 
 
-
-
-
-
+def see_list(request):
+    if  request.method == "POST":
+        list_id = request.POST['id']
+        list = Listings.objects.get(id=list_id)
+        return render(request,"auctions/seelist.html",{
+        'list':list
+         })
+    return HttpResponseRedirect(reverse("index"))

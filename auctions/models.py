@@ -1,6 +1,7 @@
 from typing import List
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.db.models.enums import Choices
 
 
@@ -22,6 +23,7 @@ class Listings(models.Model):
     bit_start = models.FloatField()
     categorie = models.ManyToManyField(Categories,related_name="categories")
     is_active = models.CharField(max_length=8,choices=list_active)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.title

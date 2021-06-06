@@ -1,0 +1,11 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+   <h3> here will go the description of the product </h3>
+   {{list.title}}
+   {{list.description}}
+   {% if list.image %}
+   <image src="media/{{list.image}}">
+   {{user}}
+   {% endif %}
+{% endblock %}
