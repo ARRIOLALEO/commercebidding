@@ -6,26 +6,52 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0001_initial'),
+        ("auctions", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Categories',
+            name="Categories",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name_cat', models.CharField(max_length=150)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name_cat", models.CharField(max_length=150)),
             ],
         ),
         migrations.CreateModel(
-            name='Listings',
+            name="Listings",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=160)),
-                ('description', models.CharField(max_length=500)),
-                ('bit_start', models.FloatField()),
-                ('is_active', models.CharField(choices=[('not', 'yes'), ('not', 'not')], max_length=8)),
-                ('categorie', models.ManyToManyField(related_name='categories', to='auctions.Categories')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=160)),
+                ("description", models.CharField(max_length=500)),
+                ("bit_start", models.FloatField()),
+                (
+                    "is_active",
+                    models.CharField(
+                        choices=[("not", "yes"), ("not", "not")], max_length=8
+                    ),
+                ),
+                (
+                    "categorie",
+                    models.ManyToManyField(
+                        related_name="categories", to="auctions.Categories"
+                    ),
+                ),
             ],
         ),
     ]

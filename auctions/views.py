@@ -2,29 +2,46 @@ from django import forms
 from django.contrib.auth import authenticate, login, logout, models
 from django.db import IntegrityError
 from django.db.transaction import commit
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm, fields, widgets
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User, Categories, Listings
-active = (('yes','yes'),('not','not'))
+from .models import User, Categories, bits, Listings
+
+active = (("yes", "yes"), ("not", "not"))
+
 
 def index(request):
-    return render(request, "auctions/index.html",{
-        'listings':Listings.objects.all()
-    })
+    return render(request, "auctions/index.html", {"listings": Listings.objects.all()})
 
 
 class formadd(ModelForm):
-    def __init__(self, *args , **kwargs):
-        super(formadd,self).__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs ={'class':'form-control','placeholder':'add the title name'}
-        self.fields['description'].widget=forms.Textarea()
+    def __init__(self, *args, **kwargs):
+        super(formadd, self).__init__(*args, **kwargs)
+        self.fields["title"].widget.attrs = {
+            "class": "form-control",
+            "placeholder": "add the title name",
+        }
+        self.fields["description"].widget = forms.Textarea()
 
     class Meta:
         model = Listings
-        fields =['title','description','image','bit_start','categorie','is_active']
+        fields = [
+            "title",
+            "description",
+            "image",
+            "bit_start",
+            "categorie",
+            "is_active",
+        ]
+
+
+class makeabeat(ModelForm):
+    class Meta:
+        model = bits
+        fields = ["bit"]
+
 
 def login_view(request):
     if request.method == "POST":
@@ -39,9 +56,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "auctions/login.html", {
-                "message": "Invalid username and/or password."
-            })
+            return render(
+                request,
+                "auctions/login.html",
+                {"message": "Invalid username and/or password."},
+            )
     else:
         return render(request, "auctions/login.html")
 
@@ -60,27 +79,30 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
-            })
+            return render(
+                request, "auctions/register.html", {"message": "Passwords must match."}
+            )
 
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "auctions/register.html", {
-                "message": "Username already taken."
-            })
+            return render(
+                request,
+                "auctions/register.html",
+                {"message": "Username already taken."},
+            )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
 
-@login_required(login_url='/login')
+
+@login_required(login_url="/login")
 def addlist(request):
-    if request.method =="POST":
-        form = formadd(request.POST,request.FILES)
+    if request.method == "POST":
+        form = formadd(request.POST, request.FILES)
         if form.is_valid():
             new_article = form.save()
             new_article.user = User.objects.get(id=request.user.id)
@@ -88,14 +110,32 @@ def addlist(request):
             return HttpResponse("this was ok all")
         return HttpResponse("it was save")
     else:
-        return render(request,"auctions/addlist.html",{'form':formadd})
+        return render(request, "auctions/addlist.html", {"form": formadd})
 
 
 def see_list(request):
-    if  request.method == "POST":
-        list_id = request.POST['id']
+    if request.method == "POST":
+        list_id = request.POST["id"]
         list = Listings.objects.get(id=list_id)
-        return render(request,"auctions/seelist.html",{
-        'list':list
-         })
+        owner = User.objects.get(username=list.user)
+        offers = bits.objects.order_by("-bit").all()
+        return render(
+            request,
+            "auctions/seelist.html",
+            {"list": list, "owner": owner.id, "makeabeat": makeabeat, "offers": offers},
+        )
     return HttpResponseRedirect(reverse("index"))
+
+
+@login_required(login_url="/login")
+def addoffer(request):
+    if request.method == "POST":
+        form = makeabeat(request.POST)
+        if form.is_valid():
+            newoffer = form.save()
+            newoffer.user = User.objects.get(id=request.user.id)
+            newoffer.listing_item = Listings.objects.get(id=request.POST["idlist"])
+            newoffer.save()
+            return HttpResponse("the offer was safe")
+        return HttpResponse("we have some error")
+    return HttpResponse(reverse("login"))

@@ -6,6 +6,25 @@
    {{list.description}}
    {% if list.image %}
    <image src="media/{{list.image}}">
-   {{user}}
+
    {% endif %}
+   <h2>this is the best offer now</h2>
+   {% for offer in offers|slice:":1"%}
+   {{offer.bit}}
+   {%endfor %}
+   {% if owner == user.id %}
+   <a> this is woring </a>
+   {% else %}
+      {% if user.is_authenticated %}
+      <form action="{% url 'addoffer' %}" method="post">
+         {% csrf_token %}
+         <input type="hidden" value="{{list.id}}" name="idlist"/>
+      {{makeabeat}}
+      <button type="submit">submit</button>
+      </from>
+     {% else %}
+        <h2>this need to loging</h2>
+      {% endif %}
+   {% endif %}
+
 {% endblock %}
