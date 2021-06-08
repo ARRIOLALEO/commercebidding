@@ -1,17 +1,62 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div class="row">
     <h1 class="text-center h1 text-uppercase mb-4"> add to the list </h1>
-    <div class="col-md-10 offset-md-1">
-    <form action="{% url 'addlist' %}" enctype='multipart/form-data'   method="post" style="background-color:white; padding:15px;border-radius:5px; overflow:hidden">
+    <div class="col-md-8 offset-md-1">
+    <form action="{% url 'addlist' %}" enctype='multipart/form-data' class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins" method="post" style="background-color:white; padding:15px;border-radius:5px; overflow:hidden">
     <div class="form-row">
         {% csrf_token %}
     </div>
     <div>
-        {{form}}
-        <button type="submit" class="btn btn-primary float-right">submit </button>
+        <div class="row row-space">
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label"> Title of the Product</label>
+                    {{form.title}}
+                 </div>
+            </div>  
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label">Insert Your Beat</label>
+                    {{form.bit_start}}
+                </div>
+            </div>
+        </div>
+        <div class="row row-space">
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label">add the descriptions</label>
+                    {{form.description}}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label"> upload your image</label>
+                    {{ form.image }}
+                </div>
+            </div>
+            </div>
+             <div class="row row-space">
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label">Select the Categorie</label>
+                    {{form.categorie}}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <label class="label"> Do you want to Display this Add</label>
+                    {{ form.is_active }}
+                </div>
+            </div>
+            </div>
+
+        
+        </div>
+        <button type="submit" class="btn btn--radius-2 btn--blue">submit </button>
     </div>
     </form>
     </div>
-   
+</div>
 {% endblock %}

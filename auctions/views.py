@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User, Categories, bits, Listings
+from django.views.decorators.csrf import csrf_exempt
 
 active = (("yes", "yes"), ("not", "not"))
 
@@ -20,10 +21,22 @@ class formadd(ModelForm):
     def __init__(self, *args, **kwargs):
         super(formadd, self).__init__(*args, **kwargs)
         self.fields["title"].widget.attrs = {
-            "class": "form-control",
-            "placeholder": "add the title name",
+            "class": "input--style-4",
         }
         self.fields["description"].widget = forms.Textarea()
+        self.fields["description"].widget.attrs = {"class": "input--style-4"}
+        self.fields["bit_start"].widget.attrs = {
+            "class": "input--style-4",
+        }
+        self.fields["image"].widget.attrs = {
+            "class": "input--style-4",
+        }
+        self.fields["categorie"].widget.attrs = {
+            "class": "input--style-4",
+        }
+        self.fields["is_active"].widget.attrs = {
+            "class": "select2-selection__rendered input--style-4"
+        }
 
     class Meta:
         model = Listings
@@ -107,18 +120,22 @@ def addlist(request):
             new_article = form.save()
             new_article.user = User.objects.get(id=request.user.id)
             new_article.save()
-            return HttpResponse("this was ok all")
+            return HttpResponseRedirect(reverse("index"))
         return HttpResponse("it was save")
     else:
         return render(request, "auctions/addlist.html", {"form": formadd})
 
 
+@csrf_exempt
 def see_list(request):
     if request.method == "POST":
         list_id = request.POST["id"]
+        print(list_id)
         list = Listings.objects.get(id=list_id)
+        print(list)
         owner = User.objects.get(username=list.user)
-        offers = bits.objects.order_by("-bit").all()
+        offers = bits.objects.all().filter(listing_item=list.id)
+        print(offers)
         return render(
             request,
             "auctions/seelist.html",

@@ -1,18 +1,94 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="/media/banner.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
+        <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <h2>Active Listings</h2>
 
+    <div class="row">
     {% for list in listings %}
-       <h2> {{ list.title }} </h2>
-       <image src="media/{{list.image}}"/>
-       
-       <form method="post" action="/seelist">
-           {% csrf_token %}
-           <input type="hidden" value="{{ list.id }}" name="id">
-           <button type="submit"> see full information </button>
-       </form>
-       <hr/>
+    <div class="card col-lg-3 col-sm-12 m-4">
+  <img
+          src="media/{{list.image}}"
+    class="card-img-top"
+    alt="..."
+  />
+  <div class="card-body">
+      <h5 class="card-title">{{ list.title}}</h5>
+    <p class="card-text">
+       {{list.description}}
+    </p>
+    <form id="{{list.id}}" method="post" action="{% url 'seelist' %}">
+      {% csrf_token %}
+    <input type="hidden" dissabled  value={{ list.id }} name="id">
+    <button type="submit" class="btn btn-primary">Button</button>
+    </form>
+  </div>
+</div>
     {% endfor %}
+
+
+    </div>
+
+
+<div class="py-5 c2a6">
+  <div class="container">
+    <!-- row  -->
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h3 class="mb-3">Are you happy with what we offer? Grab your WrapKit Copy Now</h3>
+        <h6 class="subtitle font-weight-normal">You can relay on our amazing features list and also our customer services will be great experience for you without doubt</h6>
+        <button class="btn btn-danger btn-md mt-3">Search Properties</button>
+      </div>
+      <div class="col-md-12 text-center mt-3">
+        <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/c2a/vectorecity.jpg" alt="wrapkit" class="img-fluid" />
+      </div>
+    </div>
+    <!-- row  -->
+  </div>
+</div>
+
+
+    <div class="container">
+    <div class="mgb-40 padb-30 auto-invert line-b-4 align-center">
+        <h4 class="font-cond-l fg-accent lts-md mgb-10" contenteditable="false">Not Yet Convinced?</h4>
+        <h1 class="font-cond-b fg-text-d lts-md fs-300 fs-300-xs no-mg" contenteditable="false">Read Customer Reviews</h1>
+    </div>
+    <ul class="hash-list cols-3 cols-1-xs pad-30-all align-center text-sm">
+        <li>
+          <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="wpx-100 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
+          <p class="fs-110 font-cond-l" contenteditable="false">" Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae. "</p>
+          <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">Martha Stewart</h5>
+          <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">Business Woman - New York</small>
+        </li>
+        <li>
+          <img src="https://bootdey.com/img/Content/avatar/avatar4.png" class="wpx-100 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
+          <p class="fs-110 font-cond-l" contenteditable="false">" Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae. "</p>
+          <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">Ariana Menage</h5>
+          <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">Recording Artist - Los Angeles</small>
+        </li>
+        <li>
+          <img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="wpx-100 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
+          <p class="fs-110 font-cond-l" contenteditable="false">" Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae. "</p>
+          <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">Sean Carter</h5>
+          <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">Fund Manager - Chicago</small>
+        </li>
+      </ul>
+</div>
 
 {% endblock %}
