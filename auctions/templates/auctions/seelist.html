@@ -1,18 +1,44 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-   <h3> here will go the description of the product </h3>
-   {{list.title}}
-   {{list.description}}
-   {% if list.image %}
-   <image src="media/{{list.image}}">
+	<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+							<div class="tab-pane active" id="pic-1"><img src="media/{{list.image}}" /></div>
+						</div>
+						
+					</div>
+					<div class="details col-md-6">
+             <h3 class="product-title">{{list.title}}</h3>
+						<div class="rating">
+							<div class="stars">
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							</div>
+							<span class="review-no">41 Views</span>
+						</div>
+						<p class="product-description">{{list.description}}</p>
+						<h4 class="price">Best Offer so Far: <span>
+								{% for offer in offers|slice:":1" %}
+								  {{offer.bit}}
+								{% endfor %}
 
-   {% endif %}
-   <h2>this is the best offer now</h2>
-   {% for offer in offers|slice:":1"%}
-   {{offer.bit}}
-   {%endfor %}
-   {% if owner == user.id %}
+							</span></h4> 						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+						<h5 class="sizes">Categories:
+							<span class="size" data-toggle="tooltip" title="small">
+								{{list.categorie}}
+							</span>
+						</h5>
+						</h5>
+						<div class="action">
+ {% if owner == user.id %}
    <a> this is woring </a>
    {% else %}
       {% if user.is_authenticated %}
@@ -20,11 +46,20 @@
          {% csrf_token %}
          <input type="hidden" value="{{list.id}}" name="idlist"/>
       {{makeabeat}}
-      <button type="submit">submit</button>
+      <button class="btn color blue" type="submit">submit</button>
       </from>
      {% else %}
         <h2>this need to loging</h2>
       {% endif %}
    {% endif %}
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 {% endblock %}

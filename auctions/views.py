@@ -134,7 +134,7 @@ def see_list(request):
         list = Listings.objects.get(id=list_id)
         print(list)
         owner = User.objects.get(username=list.user)
-        offers = bits.objects.all().filter(listing_item=list.id)
+        offers = bits.objects.all().filter(listing_item=list.id).order_by("-bit")
         print(offers)
         return render(
             request,
