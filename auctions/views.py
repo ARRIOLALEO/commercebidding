@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django import forms
 from django.contrib.auth import authenticate, login, logout, models
 from django.db import IntegrityError
@@ -9,7 +10,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User, Categories, bits, Listings
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core import serializers
 active = (("yes", "yes"), ("not", "not"))
 
 
@@ -156,3 +157,14 @@ def addoffer(request):
             return HttpResponse("the offer was safe")
         return HttpResponse("we have some error")
     return HttpResponse(reverse("login"))
+
+
+
+@login_required(login_url="/login")
+def metrics(request):
+    return render(request,"auctions/metrics.html") 
+
+@login_required(login_url="/login")
+def get_data_metrics(request,*args,**kwargs):
+    products = serializers.serialize('json',Listings.objects.all().filter(user=request.user.id))
+    return JsonResponse(products,safe=False)

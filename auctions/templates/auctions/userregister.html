@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="row">
+    <h1 class="text-center h1 text-uppercase mb-4"> {% block addtitle %} {% endblock %} </h1>
+    <div class="col-md-2">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Bootstrap Sidebar</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p>Dummy Heading</p>
+                    <li class="active">
+                        <a href="{% url 'addlist' %}" data-toggle="collapse" aria-expanded="false">Add new List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'usermetrics' %}">Metrics</a>
+                    </li>
+                    <li>
+                        <a href="#">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
+                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+
+        </div>
+    <div class="col-md-8 offset-md-1">
+        {% block registeruser %}
+        {% endblock %}
+   </div>
+</div>
+{% endblock %}
