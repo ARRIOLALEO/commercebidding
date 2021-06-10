@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Categories, bits, Listings
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+
 active = (("yes", "yes"), ("not", "not"))
 
 
@@ -159,12 +160,14 @@ def addoffer(request):
     return HttpResponse(reverse("login"))
 
 
-
 @login_required(login_url="/login")
 def metrics(request):
-    return render(request,"auctions/metrics.html") 
+    return render(request, "auctions/metrics.html")
+
 
 @login_required(login_url="/login")
-def get_data_metrics(request,*args,**kwargs):
-    products = serializers.serialize('json',Listings.objects.all().filter(user=request.user.id))
-    return JsonResponse(products,safe=False)
+def get_data_metrics(request, *args, **kwargs):
+    products = serializers.serialize(
+        "json", Listings.objects.all().filter(user=request.user.id)
+    )
+    return JsonResponse(products, safe=False)
