@@ -119,25 +119,23 @@ USE_TZ = True
 
 # webappexample\settings.py
 SOCIAL_AUTH_TRAILING_SLASH = False
-SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-ysleei9k.eu.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = 'mLwzgX0V5cWBApsVgnJxaoPt2lfGAKvA'
-SOCIAL_AUTH_AUTH0_SECRET ='adjzilqUNeMtr44MvGO-PFu32BU4B3Q8pNVK1ooenqQJIrMRRozIzlxLipZ9EDrj'
-SOCIAL_AUTH_AUTH0_SCOPE =[
-    'openid',
-    'profile',
-    'email'
-]
+SOCIAL_AUTH_AUTH0_DOMAIN = "dev-ysleei9k.eu.auth0.com"
+SOCIAL_AUTH_AUTH0_KEY = "mLwzgX0V5cWBApsVgnJxaoPt2lfGAKvA"
+SOCIAL_AUTH_AUTH0_SECRET = (
+    "adjzilqUNeMtr44MvGO-PFu32BU4B3Q8pNVK1ooenqQJIrMRRozIzlxLipZ9EDrj"
+)
+SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 
 # webappexample\settings.py
 
 AUTHENTICATION_BACKENDS = {
-    'social_core.backends.auth0.Auth0OAuth2',
-    'django.contrib.auth.backends.ModelBackend'
+    "social_core.backends.auth0.Auth0OAuth2",
+    "django.contrib.auth.backends.ModelBackend",
 }
 
-LOGIN_URL = '/login/auth0'
-LOGIN_REDIRECT_URL = '/addlist'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = "/login/auth0"
+LOGIN_REDIRECT_URL = "/addlist"
+LOGOUT_REDIRECT_URL = "/"
 
 
 # Static files (CSS, JavaScript, Images)

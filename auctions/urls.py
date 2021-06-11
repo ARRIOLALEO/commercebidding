@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("",include('social_django.urls')),
-    path("logout",views.logout_view,name="logout"),
+    path("", include("social_django.urls")),
+    path("logout", views.logout_view, name="logout"),
     path("addlist", views.addlist, name="addlist"),
     path("seelist", views.see_list, name="seelist"),
     path("addoffer", views.addoffer, name="addoffer"),

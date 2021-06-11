@@ -12,6 +12,7 @@ from .models import User, Categories, bits, Listings
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.conf import settings
+
 active = (("yes", "yes"), ("not", "not"))
 
 
@@ -61,10 +62,12 @@ class makeabeat(ModelForm):
 @login_required
 def logout_view(request):
     logout(request)
-    domain = settings.SOCIAL_AUTH_AUTH0_DOMAIN 
+    domain = settings.SOCIAL_AUTH_AUTH0_DOMAIN
     client_id = settings.SOCIAL_AUTH_AUTH0_KEY
-    return_to = 'http://127.0.0.1:8000'
-    return redirect(f'https://{domain}/v2/logout?client_id={client_id}&returnTo={return_to}')
+    return_to = "http://127.0.0.1:8000"
+    return redirect(
+        f"https://{domain}/v2/logout?client_id={client_id}&returnTo={return_to}"
+    )
 
 
 def register(request):
