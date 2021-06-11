@@ -5,13 +5,13 @@ from django.db import IntegrityError
 from django.db.transaction import commit
 from django.forms import ModelForm, fields, widgets
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User, Categories, bits, Listings
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
-
+from django.conf import settings
 active = (("yes", "yes"), ("not", "not"))
 
 
@@ -58,31 +58,13 @@ class makeabeat(ModelForm):
         fields = ["bit"]
 
 
-def login_view(request):
-    if request.method == "POST":
-
-        # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(
-                request,
-                "auctions/login.html",
-                {"message": "Invalid username and/or password."},
-            )
-    else:
-        return render(request, "auctions/login.html")
-
-
+@login_required
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    domain = settings.SOCIAL_AUTH_AUTH0_DOMAIN 
+    client_id = settings.SOCIAL_AUTH_AUTH0_KEY
+    return_to = 'http://127.0.0.1:8000'
+    return redirect(f'https://{domain}/v2/logout?client_id={client_id}&returnTo={return_to}')
 
 
 def register(request):
@@ -114,7 +96,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-@login_required(login_url="/login")
+@login_required
 def addlist(request):
     if request.method == "POST":
         form = formadd(request.POST, request.FILES)
@@ -146,7 +128,7 @@ def see_list(request):
     return HttpResponseRedirect(reverse("index"))
 
 
-@login_required(login_url="/login")
+@login_required
 def addoffer(request):
     if request.method == "POST":
         form = makeabeat(request.POST)
@@ -160,12 +142,12 @@ def addoffer(request):
     return HttpResponse(reverse("login"))
 
 
-@login_required(login_url="/login")
+@login_required
 def metrics(request):
     return render(request, "auctions/metrics.html")
 
 
-@login_required(login_url="/login")
+@login_required
 def get_data_metrics(request, *args, **kwargs):
     products = serializers.serialize(
         "json", Listings.objects.all().filter(user=request.user.id)

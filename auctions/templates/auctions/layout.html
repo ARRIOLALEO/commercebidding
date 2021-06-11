@@ -21,20 +21,17 @@
     <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
 <li class="nav-item">            {% if user.is_authenticated %}
  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+     <a class="nav-link" href="{% url 'logout'%}">Log Out</a>
                   </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'addlist' %}"> Add List </a>
+                    <a class="nav-link" href=""> Add List </a>
                 </li>
                    
 
                 
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    <a class="nav-link" href="/login/auth0">Log In</a>
                 </li>
             {% endif %}
  </li>

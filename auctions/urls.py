@@ -1,12 +1,12 @@
-from django.urls import path
+from django.contrib.auth import logout
+from django.urls import path, include
 
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("login", views.login_view, name="login"),
-    path("logout", views.logout_view, name="logout"),
-    path("register", views.register, name="register"),
+    path("",include('social_django.urls')),
+    path("logout",views.logout_view,name="logout"),
     path("addlist", views.addlist, name="addlist"),
     path("seelist", views.see_list, name="seelist"),
     path("addoffer", views.addoffer, name="addoffer"),
