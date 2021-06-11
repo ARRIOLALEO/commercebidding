@@ -119,10 +119,10 @@ USE_TZ = True
 
 # webappexample\settings.py
 SOCIAL_AUTH_TRAILING_SLASH = False
-SOCIAL_AUTH_AUTH0_DOMAIN = "dev-ysleei9k.eu.auth0.com"
-SOCIAL_AUTH_AUTH0_KEY = "mLwzgX0V5cWBApsVgnJxaoPt2lfGAKvA"
+SOCIAL_AUTH_AUTH0_DOMAIN = ""
+SOCIAL_AUTH_AUTH0_KEY = ""
 SOCIAL_AUTH_AUTH0_SECRET = (
-    "adjzilqUNeMtr44MvGO-PFu32BU4B3Q8pNVK1ooenqQJIrMRRozIzlxLipZ9EDrj"
+    ""
 )
 SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 
