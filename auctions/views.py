@@ -117,12 +117,9 @@ def addlist(request):
 def see_list(request):
     if request.method == "POST":
         list_id = request.POST["id"]
-        print(list_id)
         list = Listings.objects.get(id=list_id)
-        print(list)
         owner = User.objects.get(username=list.user)
         offers = bits.objects.all().filter(listing_item=list.id).order_by("-bit")
-        print(offers)
         return render(
             request,
             "auctions/seelist.html",
@@ -156,3 +153,11 @@ def get_data_metrics(request, *args, **kwargs):
         "json", Listings.objects.all().filter(user=request.user.id)
     )
     return JsonResponse(products, safe=False)
+
+def seecategorie(request):
+    if request.method == "POST":
+        getCategorie = Categories.objects.get(name_cat = request.POST.get('categorie',False))
+        categorie_all_list = Listings.objects.filter(categorie = getCategorie)
+        return  render(request,'auctions/categorie.html',{
+            'alllist': categorie_all_list
+        })

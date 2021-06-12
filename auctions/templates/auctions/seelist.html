@@ -33,7 +33,14 @@
 							</span></h4> 						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 						<h5 class="sizes">Categories:
 							<span class="size" data-toggle="tooltip" title="small">
-								{{list.categorie}}
+								{% for categorie in list.categorie.all %}
+								<form method="post" action= "{% url 'seecategorie' %}">
+
+									{% csrf_token %}
+									 <input type="hidden" name="categorie" value="{{categorie}}">
+									 <button type="submit">{{categorie}}</button>
+								 </form>
+								{%endfor%}
 							</span>
 						</h5>
 						</h5>

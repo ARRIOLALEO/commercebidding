@@ -1,0 +1,17 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+      <div class="row">    
+    {% for list in alllist %}
+    <div class="card col-lg-2 col-sm-12 m-2 p-2">
+        <img src="media/{{list.image}}" class="card-img-top" alt=".."/>
+        <h5 class="card-title">{{ list.title }}</h5>
+        <form id="{{list.id}}" method="post" action="{% url 'seelist' %}">
+             {% csrf_token %}
+             <input type="hidden" dissabled value={{list.id}} name="id">
+             <button type="submit" class="btn btn-primary">More</button>
+        </form>
+    </div>
+    {% endfor %}
+      </div>
+{% endblock %}

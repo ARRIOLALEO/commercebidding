@@ -12,4 +12,5 @@ urlpatterns = [
     path("addoffer", views.addoffer, name="addoffer"),
     path("usermetrics", views.metrics, name="usermetrics"),
     path("getdata", views.get_data_metrics, name="getdata"),
+    path("seecategorie", views.seecategorie,name="seecategorie"),
 ]
