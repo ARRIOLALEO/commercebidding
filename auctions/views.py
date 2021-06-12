@@ -154,10 +154,13 @@ def get_data_metrics(request, *args, **kwargs):
     )
     return JsonResponse(products, safe=False)
 
+
 def seecategorie(request):
     if request.method == "POST":
-        getCategorie = Categories.objects.get(name_cat = request.POST.get('categorie',False))
-        categorie_all_list = Listings.objects.filter(categorie = getCategorie)
-        return  render(request,'auctions/categorie.html',{
-            'alllist': categorie_all_list
-        })
+        getCategorie = Categories.objects.get(
+            name_cat=request.POST.get("categorie", False)
+        )
+        categorie_all_list = Listings.objects.filter(categorie=getCategorie)
+        return render(
+            request, "auctions/categorie.html", {"alllist": categorie_all_list}
+        )
