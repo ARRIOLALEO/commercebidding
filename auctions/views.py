@@ -108,7 +108,7 @@ def addlist(request):
             new_article.user = User.objects.get(id=request.user.id)
             new_article.save()
             return HttpResponseRedirect(reverse("index"))
-        return HttpResponseRedirect(reverse('addlist'))
+        return HttpResponseRedirect(reverse("addlist"))
     else:
         return render(request, "auctions/addlist.html", {"form": formadd})
 
