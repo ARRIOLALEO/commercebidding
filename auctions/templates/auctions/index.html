@@ -20,7 +20,7 @@
 
     <h2>Active Listings</h2>
 
-    <div class="row">
+    <div class="row" id="offers">
     {% for list in listings %}
     <div class="card col-lg-3 col-sm-12 m-4">
   <img
@@ -33,19 +33,26 @@
     <p class="card-text">
        {{list.description}}
     </p>
-    <form id="{{list.id}}" method="post" action="{% url 'seelist' %}">
-      {% csrf_token %}
-    <input type="hidden" dissabled  value={{ list.id }} name="id">
-    <button type="submit" class="btn btn-primary">Button</button>
-    </form>
+    <a href="{% url 'seelist' list.id %}"> see more </a>
   </div>
 </div>
     {% endfor %}
-
-
     </div>
-
-
+    <div class="paginarion">
+      <span class="steps-links">
+        {% if listings.has_previous %} 
+         <a href="?page=1#offers">&laquo; First</a>
+         <a href="?page={{ listings.previous_page_number}}#offers">previus </a>
+         {% endif %}
+         <span class="current">
+           Page {{listings.number }} of {{listings.paginator.num_pages}}
+         </span>
+         {% if listings.has_next %}
+         <a href="?page={{listings.next_page_number}}#offers"> next</a>
+         <a href="?page={{listings.paginator.num_pages}}#offers">Last &raquo;</a>
+         {% endif %}
+      </span>
+    </div>
 <div class="py-5 c2a6">
   <div class="container">
     <!-- row  -->

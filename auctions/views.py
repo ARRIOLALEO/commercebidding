@@ -12,12 +12,18 @@ from .models import User, Categories, bits, Listings
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.conf import settings
+from django.core.paginator import Paginator
+
 
 active = (("yes", "yes"), ("not", "not"))
 
 
 def index(request):
-    return render(request, "auctions/index.html", {"listings": Listings.objects.all()})
+    all_offers = Listings.objects.all()
+    paginator = Paginator(all_offers, 1)
+    pagenumber = request.GET.get("page", 1)
+    page_offers = paginator.get_page(pagenumber)
+    return render(request, "auctions/index.html", {"listings": page_offers})
 
 
 class formadd(ModelForm):
@@ -114,18 +120,15 @@ def addlist(request):
 
 
 @csrf_exempt
-def see_list(request):
-    if request.method == "POST":
-        list_id = request.POST["id"]
-        list = Listings.objects.get(id=list_id)
-        owner = User.objects.get(username=list.user)
-        offers = bits.objects.all().filter(listing_item=list.id).order_by("-bit")
-        return render(
-            request,
-            "auctions/seelist.html",
-            {"list": list, "owner": owner.id, "makeabeat": makeabeat, "offers": offers},
-        )
-    return HttpResponseRedirect(reverse("index"))
+def see_list(request, product):
+    list = Listings.objects.get(id=product)
+    owner = User.objects.get(username=list.user)
+    offers = bits.objects.all().filter(listing_item=list.id).order_by("-bit")
+    return render(
+        request,
+        "auctions/seelist.html",
+        {"list": list, "owner": owner.id, "makeabeat": makeabeat, "offers": offers},
+    )
 
 
 @login_required
@@ -137,7 +140,8 @@ def addoffer(request):
             newoffer.user = User.objects.get(id=request.user.id)
             newoffer.listing_item = Listings.objects.get(id=request.POST["idlist"])
             newoffer.save()
-            return HttpResponse("the offer was safe")
+            myid = request.POST["idlist"]
+            return HttpResponseRedirect(reverse("seelist", kwargs={"product": myid}))
         return HttpResponse("we have some error")
     return HttpResponse(reverse("login"))
 

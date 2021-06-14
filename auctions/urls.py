@@ -8,7 +8,7 @@ urlpatterns = [
     path("", include("social_django.urls")),
     path("logout", views.logout_view, name="logout"),
     path("addlist", views.addlist, name="addlist"),
-    path("seelist", views.see_list, name="seelist"),
+    path("seelist/<int:product>/", views.see_list, name="seelist"),
     path("addoffer", views.addoffer, name="addoffer"),
     path("usermetrics", views.metrics, name="usermetrics"),
     path("getdata", views.get_data_metrics, name="getdata"),

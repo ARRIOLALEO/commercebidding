@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =
+SECRET_KEY = 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -120,8 +120,7 @@ USE_TZ = True
 SOCIAL_AUTH_TRAILING_SLASH = False
 SOCIAL_AUTH_AUTH0_DOMAIN = 
 SOCIAL_AUTH_AUTH0_KEY = 
-SOCIAL_AUTH_AUTH0_SECRET = 
-SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
+SOCIAL_AUTH_AUTH0_SECRET = OCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 
 # webappexample\settings.py
 
