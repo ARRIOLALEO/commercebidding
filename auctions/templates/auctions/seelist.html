@@ -31,14 +31,14 @@
 								{% endfor %}
 
 							</span></h4> 						<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<h5 class="sizes">Categories:
+						<h5 class="sizes" style="display: inherit;">Categories:
 							<span class="size" data-toggle="tooltip" title="small">
 								{% for categorie in list.categorie.all %}
 								<form method="post" action= "{% url 'seecategorie' %}">
 
 									{% csrf_token %}
 									 <input type="hidden" name="categorie" value="{{categorie}}">
-									 <button type="submit">{{categorie}}</button>
+									 <button type="submit" class="btn btn-link" style="line-height:0;color:black">{{categorie}}</button>
 								 </form>
 								{%endfor%}
 							</span>
@@ -46,8 +46,31 @@
 						</h5>
 						<div class="action">
  {% if owner == user.id %}
-   <a> this is woring </a>
-   {% else %}
+ <table class="table">
+ <thead>
+	 <tr>
+		 <th scope="col">USER</th>
+		 <th scope="COL">Offer</th>
+		 <th scope="col"></th>
+	 </tr>
+ </thead>
+ <tbody>
+      {% for offer in offers %}
+			<tr>
+				<td>
+			{{offer.user}}
+				</td>
+				<td>
+				{{offer.bit}}
+				</td>
+				<td>
+					<button class="btn btn-link" style="color:green;line-height:0"> Accept This Offer </button>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+ </table>
+ {% else %}
       {% if user.is_authenticated %}
       <form action="{% url 'addoffer' %}" method="post">
          {% csrf_token %}
@@ -56,17 +79,27 @@
       <button class="btn color blue" type="submit">submit</button>
       </from>
      {% else %}
-        <a href="login/auth0">Loging to make an offer </a> 
+		 <a href="{% url 'index' %}login/auth0">Loging to make an offer </a> 
 		 {% endif %}
    {% endif %}
 
-
+	 <hr/>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-
+		<hr/>
+		<h3 class="text-center"> Similiar Producs </h3>
+		<div class="row">
+			{% for newoffer in lastoffers %}
+             <div class="card col-lg-3 col-sm-12 m-4">
+							 <img src="{% url 'index' %}media/{{newoffer.image}}"/>
+							 <div class="card-body">
+								 <h5 class="card-title">{{ newoffer.title }}</h5>
+								 <a href="{% url 'seelist' newoffer.id %}"> see more </a>
+							 </div>
+						 </div>
+			{% endfor %}
+	</div> 
 {% endblock %}

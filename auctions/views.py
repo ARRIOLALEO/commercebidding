@@ -20,7 +20,7 @@ active = (("yes", "yes"), ("not", "not"))
 
 def index(request):
     all_offers = Listings.objects.all()
-    paginator = Paginator(all_offers, 1)
+    paginator = Paginator(all_offers, 3)
     pagenumber = request.GET.get("page", 1)
     page_offers = paginator.get_page(pagenumber)
     return render(request, "auctions/index.html", {"listings": page_offers})
@@ -124,10 +124,18 @@ def see_list(request, product):
     list = Listings.objects.get(id=product)
     owner = User.objects.get(username=list.user)
     offers = bits.objects.all().filter(listing_item=list.id).order_by("-bit")
+    last_offers = Listings.objects.order_by("-id")[:3]
+    print(last_offers)
     return render(
         request,
         "auctions/seelist.html",
-        {"list": list, "owner": owner.id, "makeabeat": makeabeat, "offers": offers},
+        {
+            "list": list,
+            "owner": owner.id,
+            "makeabeat": makeabeat,
+            "offers": offers,
+            "lastoffers": last_offers,
+        },
     )
 
 
